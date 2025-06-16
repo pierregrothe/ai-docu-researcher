@@ -1,19 +1,12 @@
-"""Defines the Data Synthesizer Agent"""
+# In documentary_research/sub_agents/data_synthesizer/agent.py
 from google.adk.agents.llm_agent import Agent
 from documentary_research.shared_libraries import constants
-# The schema import was missing in the file you sent, which might be another issue.
-# I've added it back in based on your previous code structure.
-from documentary_research.schemas import FinalOutput
 from . import prompt
 
-# This variable name is the fix.
-# It's now 'data_synthesizer_agent' to match the import statement.
+# This agent does not need tools, it only processes data.
 data_synthesizer_agent = Agent(
-    model=constants.PRO_MODEL, # Use the powerful model for structuring data
+    model=constants.PRO_MODEL,
     name="data_synthesizer_agent",
-    description="Takes all the raw research notes and meticulously structures them into the final, validated JSON output format.",
+    description="The Editor-in-Chief. Synthesizes all raw data into the final, validated, and enriched knowledge graph.",
     instruction=prompt.DATA_SYNTHESIZER_PROMPT,
-    # The `output_schema` was also missing from the file content you sent.
-    # This is critical for the synthesizer to work.
-    output_schema=FinalOutput
 )

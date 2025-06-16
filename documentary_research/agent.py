@@ -1,22 +1,25 @@
-"""Defines the Root Agent for the Documentary Research App."""
+# In documentary_research/agent.py
 from google.adk.agents.llm_agent import Agent
+from documentary_research.shared_libraries import constants
+from . import prompt
+from .schemas import FinalOutput
+
+# Import all the specialized agents
 from .sub_agents.research_planner.agent import research_planner
-# Import the two new agents
-from .sub_agents.source_finder.agent import source_finder_agent
+from .sub_agents.source_evaluator.agent import source_evaluator_agent
 from .sub_agents.fact_extractor.agent import fact_extractor_agent
 from .sub_agents.data_synthesizer.agent import data_synthesizer_agent
-from . import prompt
-from .shared_libraries import constants
 
 root_agent = Agent(
     model=constants.PRO_MODEL,
-    name="documentary_research",
-    description="An AI assistant that automates the research and story-planning for documentaries.",
+    name=constants.AGENT_NAME,
+    description=constants.DESCRIPTION,
     instruction=prompt.ROOT_PROMPT,
+    output_schema=FinalOutput, # The final output will be the complete knowledge graph
     sub_agents=[
         research_planner,
-        source_finder_agent,    # Add the new scout
-        fact_extractor_agent,   # Add the new researcher
+        source_evaluator_agent,
+        fact_extractor_agent,
         data_synthesizer_agent,
-    ]
+    ],
 )
